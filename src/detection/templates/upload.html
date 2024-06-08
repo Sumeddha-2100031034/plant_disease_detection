@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detection Result</title>
+</head>
+<body>
+    <h1>Detection Result</h1>
+    <img src="{{ image_url }}" alt="Uploaded Image" width="300">
+    <p>Disease Name: {{ disease_name }}</p>
+    <p>Treatment Suggestions: {{ treatment }}</p>
+    <a href="{% url 'detect_disease' %}">Go Back</a>
+</body>
+</html>

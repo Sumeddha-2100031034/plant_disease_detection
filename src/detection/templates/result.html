@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection Result</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #228b22;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.result-section {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-section h2 {
+    margin-bottom: 20px;
+}
+
+#imageContainer {
+    margin-bottom: 20px;
+}
+
+#imageContainer img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    background-color: #228b22;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #1e7b1e;
+}
+
+footer {
+    background-color: #228b22;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+    </style>
+    <script>
+        window.onload = function() {
+    // Simulated data for the demo
+    const imageData = localStorage.getItem('uploadedImage');
+    const disease = "Powdery Mildew";
+    const precautions = [
+        "Remove infected leaves and stems.",
+        "Ensure proper air circulation around the plant.",
+        "Avoid overhead watering.",
+        "Apply fungicides if necessary."
+    ];
+
+    // Display the image
+    const imageContainer = document.getElementById('imageContainer');
+    const img = document.createElement('img');
+    img.src = imageData;
+    imageContainer.appendChild(img);
+
+    // Display disease information
+    const diseaseName = document.getElementById('diseaseName');
+    diseaseName.textContent = disease;
+
+    const precautionsList = document.getElementById('precautionsList');
+    precautions.forEach(precaution => {
+        const listItem = document.createElement('li');
+        listItem.textContent = precaution;
+        precautionsList.appendChild(listItem);
+    });
+}
+
+function goBack() {
+    window.location.href = '{% url 'index' %}';
+}
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plant Disease Detection Result</h1>
+        </header>
+        <main>
+            <div class="result-section">
+                <h2>Analysis Result</h2>
+                <div id="imageContainer">
+                    <img src="{{ file_url }}" alt="Uploaded Image">
+                </div>
+                <div id="diseaseInfo">
+                    <h3>Disease Detected:{{ disease }} <span id="diseaseName"></span></h3>
+                    <h4>Precautions: {{ precautions }} </h4>
+                    <ul id="precautionsList"></ul>
+                </div>
+                <button onclick="goBack()">Upload Another Image</button>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Plant Disease Detection. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="result.js"></script>
+</body>
+</html>
+
+

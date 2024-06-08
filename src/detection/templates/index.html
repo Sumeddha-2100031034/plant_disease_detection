@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #228b22;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.upload-section {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-section h2 {
+    margin-bottom: 20px;
+}
+
+#imageUpload {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #228b22;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #1e7b1e;
+}
+
+footer {
+    background-color: #228b22;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+    </style>
+    <script>
+        function uploadImage() {
+    const input = document.getElementById('imageUpload');
+    const resultDiv = document.getElementById('result');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            // Display the uploaded image
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+
+            // Clear previous results
+            resultDiv.innerHTML = '';
+
+            // Append the image
+            resultDiv.appendChild(img);
+
+            // Here you can add your image processing logic
+            // For now, we just display a message
+            const message = document.createElement('p');
+            message.textContent = 'Image uploaded successfully. Processing...';
+            resultDiv.appendChild(message);
+
+            // Simulate processing delay
+            setTimeout(() => {
+                message.textContent = 'Disease detection complete. No disease detected.';
+            }, 2000); // Change this to your processing time
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        alert('Please select an image file.');
+    }
+}
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plant Disease Detection</h1>
+        </header>
+        <main>
+            <div class="upload-section">
+                <h2>Upload a plant leaf image to detect disease</h2>
+                <form method="POST" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+                    {% csrf_token %}
+                <input type="file" id="imageUpload" accept="image/*" name = "file" required>
+                <button onclick="uploadImage()" type="submit">Upload</button>
+                <div id="result"></div>
+                    </form>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Plant Disease Detection. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
